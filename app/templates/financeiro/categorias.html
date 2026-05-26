@@ -46,7 +46,9 @@
                                         Editar
                                     </a>
 
-                                    <form method="POST" action="{{ url_for('financeiro.deletar_categoria_view', id=categoria.id) }}">
+                                    <form method="POST" 
+                                    action="{{ url_for('financeiro.deletar_categoria_view', id=categoria.id) }}"
+                                    onsubmit="return confirm('Deseja realmente excluir esta categoria?\nEssa ação não poderá ser desfeita.');">
                                         <button class="action-delete" type="submit">
                                             Deletar
                                         </button>

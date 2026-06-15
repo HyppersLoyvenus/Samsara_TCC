@@ -15,6 +15,8 @@ def create_app():
     bcrypt.init_app(app)
     mail.init_app(app)
 
+    from app import models
+
     login_manager.login_view = "auth.login"
     login_manager.login_message = ("Faça login para acessar esta página.")
     login_manager.login_message_category = "warning"
@@ -30,6 +32,7 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(financeiro_bp)
 
-    iniciar_agendador(app)
+    if app.config["SCHEDULER_ENABLED"]:
+        iniciar_agendador(app)
 
     return app

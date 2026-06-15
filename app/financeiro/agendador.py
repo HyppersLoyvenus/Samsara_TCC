@@ -3,7 +3,9 @@ from app.financeiro.notificacoes import verificar_vencimentos
 
 
 def iniciar_agendador(app):
-    scheduler = BackgroundScheduler()
+    scheduler = BackgroundScheduler(
+        timezone=app.config["SCHEDULER_TIMEZONE"]
+    )
 
     scheduler.add_job(
         func=verificar_vencimentos,

@@ -62,3 +62,23 @@ class Config:
 	else:
 		SQLALCHEMY_DATABASE_URI = "sqlite:///instance/database.db"
 ```
+
+3. LOUCURA
+
+1. por que atualizar o apk no RUN
+
+2. lógica disso: 
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup && \
+    chown -R appuser:appgroup /usr/src/app && \
+    chmod +x teste.sh
+USER appuser
+
+3. restart: unless-stopped FOI
+por que tem que ter & qual a lógica disso também
+
+4. start_period (grace period) do healthcheck FOI
+por que o qual a logica também
+
+5. driver: bridge do networks
+
+6. rota health no 5000/ do healthcheck

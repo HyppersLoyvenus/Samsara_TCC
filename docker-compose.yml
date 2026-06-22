@@ -1,6 +1,7 @@
 services:
   db:
     image: postgres:16-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -16,9 +17,11 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+      start_period: 10s
 
   web:
     build: .
+    restart: on-failure:5
     ports:
       - "5000:5000"
     env_file:
@@ -28,9 +31,16 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
 
 networks: 
   flask_network:
+    driver: bridge
 
 volumes:
   postgres_data:

@@ -1,6 +1,10 @@
 FROM python:3.14.6-alpine
 WORKDIR /usr/src/app 
 
+RUN apk update && \
+    apk add --no-cache curl && \
+    rm -rf /var/cache/apk/*
+
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 

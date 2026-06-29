@@ -15,19 +15,23 @@ Um sistema que serve como uma agenda para acompanhar despesas financeiras e envi
 ### **Via Docker**
 
 1. Criar o arquivo `.env` na raiz do projeto copiando o `.env.example`:
+
+   Windows:
    ```sh
    copy .env.example .env
    ```
-   1.1 se necessário, abrir o arquivo `.env` recém criado e preencher os campos abaixo:
+   Linux/MacOS:
+   ```sh
+   cp .env.example .env
+   ```
+   1.1 se necessário, abrir o arquivo `.env` recém criado e verificar se os campos abaixo estão preenchidos (se não, preencher):
    ```env
    POSTGRES_USER=
    POSTGRES_PASSWORD=
    POSTGRES_DB=
-   POSTGRES_HOST=
-   POSTGRES_PORT=
    ```
 
-2. Subir a aplicação com Docker Compose:
+3. Subir a aplicação com Docker Compose:
    ```sh
    docker compose up --build -d
    ```
@@ -50,8 +54,14 @@ Um sistema que serve como uma agenda para acompanhar despesas financeiras e envi
    ```
 
 3. Criar o arquivo `.env` na raiz do projeto copiando o `.env.example`:
+
+   Windows:
    ```sh
    copy .env.example .env
+   ```
+   Linux/MacOS:
+   ```sh
+   cp .env.example .env
    ```
    3.1 no `.env` descomentar a linha 8 e adicionar:
    ```env
@@ -71,5 +81,29 @@ Um sistema que serve como uma agenda para acompanhar despesas financeiras e envi
     > Aplicação estará disponível em: http://localhost:5000
 
 ## Estrutura do projeto <a name="estrutura-projeto"></a>
+O projeto segue o padrão arquitetural **MVC (Model, View, Controller)** adaptado para o Flask através do uso de **Blueprints**:
+
+```text
+Samsara_TCC/
+├── app/                  # Diretório principal da aplicação
+│   ├── auth/             # Módulo de autenticação (rotas e lógica para: cadastro, login e logout de usuários)
+│   ├── financeiro/       # Módulo financeiro (cobre toda a parte de: dashboard, lançamentos, agenda, relatórios e alertas)
+│   ├── main/             # Módulo raiz (rota base / e perfil de usuário)
+│   ├── static/           # Arquivos estáticos (CSS, imagens e ícones)
+│   ├── templates/        # Telas da aplicação (HTML utilizando Jinja2)
+│   ├── utils/            # Classes auxiliares (formatação de texto e valores)
+│   ├── config.py         # Parâmetros globais para a configuração da aplicação
+│   ├── extensions.py     # Gerenciamento e inicialização das bibliotecas externas
+│   ├── models.py         # Modelagem do banco de dados (SQLAlchemy)
+│   └── __init__.py       # Configuração da application factory (create_app)
+├── migrations/           # Versionamento da estrutura do banco de dados
+├── .env.example          # Modelo das variáveis de ambiente
+├── docker-compose.yml    # Orquestrador dos serviços (Nginx, Flask, PostgreSQL)
+├── Dockerfile            # Configuração da imagem Python do backend
+├── main.py               # Ponto de entrada para execução da aplicação
+├── nginx.conf            # Configuração do proxy reverso e servidor de estáticos
+├── requirements.txt      # Bibliotecas do ecossistema Python necessárias
+└── setup_up.sh           # Script de inicialização automatizada
+```
 
 ## Como enviar um alerta de teste <a name="enviar-alerta-teste"></a>
